@@ -26,8 +26,8 @@ def stop_spam():
     spamming = False
 
 
-keyboard.on_press_key("right ctrl", lambda _: start_spam())
-keyboard.on_release_key("right ctrl", lambda _: stop_spam())
+keyboard.on_press_key("right shift", lambda _: start_spam())
+keyboard.on_release_key("right shift", lambda _: stop_spam())
 
-print("ค้าง RCtrl เพื่อ spam LCtrl, กด ESC เพื่อออก")
+print("ค้าง right Shift เพื่อ spam Left Ctrl, กด ESC เพื่อออก")
 keyboard.wait("esc")
