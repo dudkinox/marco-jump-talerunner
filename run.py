@@ -3,30 +3,31 @@ import threading
 import keyboard
 
 spamming = False
+worker = None
 
 
 def spam_lctrl():
     global spamming
     while spamming:
-        keyboard.send("left ctrl")
-        time.sleep(0.03)  # 30 ms
+        keyboard.press_and_release("left ctrl")
+        time.sleep(0.03)
 
 
-def on_press(event):
-    global spamming
-    if event.name == "right ctrl" and not spamming:
+def start_spam():
+    global spamming, worker
+    if not spamming:
         spamming = True
-        threading.Thread(target=spam_lctrl, daemon=True).start()
+        worker = threading.Thread(target=spam_lctrl, daemon=True)
+        worker.start()
 
 
-def on_release(event):
+def stop_spam():
     global spamming
-    if event.name == "right ctrl":
-        spamming = False
+    spamming = False
 
 
-keyboard.on_press(on_press)
-keyboard.on_release(on_release)
+keyboard.on_press_key("right ctrl", lambda _: start_spam())
+keyboard.on_release_key("right ctrl", lambda _: stop_spam())
 
-print("เริ่มทำงานแล้ว: ค้าง RCtrl เพื่อ spam LCtrl")
-keyboard.wait()
+print("ค้าง RCtrl เพื่อ spam LCtrl, กด ESC เพื่อออก")
+keyboard.wait("esc")
