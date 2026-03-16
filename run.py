@@ -10,7 +10,7 @@ def spam_lctrl():
     global spamming
     while spamming:
         keyboard.press_and_release("left ctrl")
-        time.sleep(0.03)
+        time.sleep(0.01)
 
 
 def start_spam():
